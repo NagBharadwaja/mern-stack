@@ -2,9 +2,9 @@ This project is a simple MERN stack application that is built from scratch witho
 Everything is configured from scratch to work.
 
 **Tools used**
-**Client:** React, React Router, Webpack, Babel
-**Server:** Node.js, Express
-**Database:** MongoDB, Atlas
+- **Client:** React, React Router, Webpack, Babel
+- **Server:** Node.js, Express
+- **Database:** MongoDB, Atlas
 
 The approach I took in steps are as below:
 1. Create Database in MongoDB Atlas
