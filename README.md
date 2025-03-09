@@ -26,6 +26,7 @@ The approach I took in steps are as below:
    -  To be able to serve our frontend content from our backend server we need to register the Frontend's dist folder as static content.
 
        // In Production ONLY
+      
        if (process.env.NODE_ENV === "production") {
       
             // Register dist folder as static content to serve it to the client
