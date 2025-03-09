@@ -25,19 +25,27 @@ The approach I took in steps are as below:
 6. Now, we need to configure so that we're able to launch our app (Frontend & Backend) on a single server for Production use.
    -  To be able to serve our frontend content from our backend server we need to register the Frontend's dist folder as static content.
      
-       **if (process.env.NODE_ENV === "production") {
+       if (process.env.NODE_ENV === "production") {
+      
             // Register dist folder as static content to serve it to the client
+      
             app.use(express.static(path.join(__dirname, '/frontend/dist')))
+      
             // Sending Frontend/dist/index.html for any requests from the client except for the API requests
+      
             app.get('*', (req, res) => {
+      
                 res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+      
             })
-        }**
+      
+        }
       
    - In root package.json, introduce two scripts. One to install and build Frontend and Backend dependencies and Two to run our server in PRD mode (node server.js)
      
-     **"build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-     "start": "SET NODE_ENV=production&& node backend/server.js"**
+     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+     
+     "start": "SET NODE_ENV=production&& node backend/server.js"
      
 7. Now when we run npm run build AND npm run start from root folder, we can see the dependencies for server and Frontend being installed AND a dist folder being
    generated in Frontend folder accordingly.
