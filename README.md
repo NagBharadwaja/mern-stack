@@ -5,7 +5,7 @@ The approach I took in steps are as below:
 1. Create Database in MongoDB Atlas
 2. Set up Backend
    - Install express, cors, dotenv, mongoose dependencies
-   - Setup Mongoose DB connection and spin the express server
+   - Setup Mongoose DB connection and spin the express server. (**NOTE:** We need to store our MongoDB connection string in root folder .env file)
    - Introduce scripts for dev and prd to spin up Node server
    - Create APIs
    - Test APIs in Postman
