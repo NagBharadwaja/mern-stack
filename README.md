@@ -1,6 +1,11 @@
 This project is a simple MERN stack application that is built from scratch without using any libraries like create-react-app or vite.
 Everything is configured from scratch to work.
 
+**Tools used**
+**Client:** React, React Router, Webpack, Babel
+**Server:** Node.js, Express
+**Database:** MongoDB, Atlas
+
 The approach I took in steps are as below:
 1. Create Database in MongoDB Atlas
 2. Set up Backend
