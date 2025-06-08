@@ -3,6 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
+import { useAuthContext } from "../hooks/useAuthContext";
+
 const EMPTY_ARRAY = [];
 
 export const CreateExercise = () => {
@@ -11,9 +13,20 @@ export const CreateExercise = () => {
     const [description, setDescription] = useState("");
     const [duration, setDuration] = useState();
     const [date, setDate] = useState(new Date());
+    const [error, setError] = useState("");
+
+    const { user } = useAuthContext();
 
     useEffect(() => {
-        axios.get("http://localhost:5000/users")
+        const fetchData = () => {
+            axios.get(
+                "http://localhost:5000/api/users",
+                {
+                    "headers": {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                }
+            )
             .then(res => {
                 console.log(res.data);
                 if (res.data.length > 0) {
@@ -23,8 +36,18 @@ export const CreateExercise = () => {
                     setUsername(usernames[0])
                 }
             })
-            .catch(err => console.log(`Error fetching users: ${err}`));
-    }, []);
+            .catch(err => {
+                console.log(`Error fetching users: ${err}`);
+                setError(`Error fetching users: ${err}`);
+            });
+        }
+
+        if (user) {
+            fetchData();
+        } else {
+            setError("Log in to create exercise");
+        }
+    }, [user]);
 
     const handleUsernameChange = e => {
         e.stopPropagation();
@@ -47,6 +70,12 @@ export const CreateExercise = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        if(!user?.token) {
+            setError("Log in to create exercise");
+            return;
+        }
+
         const exercise = {
             username,
             description,
@@ -63,38 +92,44 @@ export const CreateExercise = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>User name</label>
-                    <select
-                        className="form-control"
-                        onChange={handleUsernameChange}
-                        required
-                        value={username}
-                    >
-                        {usersList.map(user => (
-                                <option key={user} value={user}>{user}</option>
-                            )
-                        )}
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label>Description</label>
-                    <input type="text" className="form-control" onChange={handleDescriptionChange} required value={description} />
-                </div>
-                <div className="form-group">
-                    <label>Duration (in minutes)</label>
-                    <input type="text" className="form-control" onChange={handleDurationChange} required value={duration} />
-                </div>
-                <div className="form-group">
-                    <label>Date</label><br />
-                    <DatePicker selected={date} onChange={handleDateChange} />
-                </div>
+            {
+                error ? (
+                    <p>{error}</p>
+                ) : (
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label>User name</label>
+                            <select
+                                className="form-control"
+                                onChange={handleUsernameChange}
+                                required
+                                value={username}
+                            >
+                                {usersList.map(user => (
+                                        <option key={user} value={user}>{user}</option>
+                                    )
+                                )}
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label>Description</label>
+                            <input type="text" className="form-control" onChange={handleDescriptionChange} required value={description} />
+                        </div>
+                        <div className="form-group">
+                            <label>Duration (in minutes)</label>
+                            <input type="text" className="form-control" onChange={handleDurationChange} required value={duration} />
+                        </div>
+                        <div className="form-group">
+                            <label>Date</label><br />
+                            <DatePicker selected={date} onChange={handleDateChange} />
+                        </div>
 
-                <div className="form-group">
-                    <input type="submit" className="btn btn-primary" value="Create Exercise" />
-                </div>
-            </form>
+                        <div className="form-group">
+                            <input type="submit" className="btn btn-primary" value="Create Exercise" />
+                        </div>
+                    </form>
+                )
+            }
         </div>
     );
 }

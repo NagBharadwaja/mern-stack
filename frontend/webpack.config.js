@@ -19,8 +19,14 @@ module.exports = {
     }),
   ],
   devServer: {
+    // Supports client side routing upon browser refresh
+    historyApiFallback: true,
     hot: true,
+    client: {
+      overlay: false
+    }
   },
+  devtool : 'inline-source-map',
   resolve: {
     modules: [__dirname, "node_modules"],
     extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],

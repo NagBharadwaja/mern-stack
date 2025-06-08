@@ -66,7 +66,7 @@ export const EditExercise = () => {
         };
         console.log("Exercise: ", exercise);
 
-        axios.put(`http://localhost:5000/exercises/update/${id}`,exercise)
+        axios.put(`http://localhost:5000/api/exercises/update/${id}`,exercise)
             .then(res => console.log(res.data))
             .catch(err => console.log(`Error in updating exercise: ${err}`));
         window.location ='/';

@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+const { requireAuth } = require('../middlwares/requireAuth');
 const Exercise = require('../models/exercise.model');
-const User = require('../models/user.model');
+
+router.use(requireAuth);
 
 router.get('/', (req, res) => {
     Exercise.find()
