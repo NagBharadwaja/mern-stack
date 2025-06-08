@@ -2,9 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
-// const router = express.Router();
-
-const { requireAuth } = require("./middlwares/requireAuth");
 
 require("dotenv").config();
 
@@ -24,9 +21,6 @@ mongoose.connect(uri)
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// Auth middleware
-// router.use(requireAuth);
 
 // Routes
 const usersRouter = require("./routes/users");
